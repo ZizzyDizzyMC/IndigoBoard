@@ -1,2 +1,2 @@
 # Indigoboard
-A taggable "booru-style" imageboard written in Lua with Luvit.
+A taggable "booru-style" imageboard written in Node.js
