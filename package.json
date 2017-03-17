@@ -1,0 +1,15 @@
+{
+  "name": "Indigoboard",
+  "version": "0.0.1",
+  "description": "A taggable `booru-style` imageboard written in Node.js.",
+  "license": "LGPL-3.0",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1",
+    "cookie-parser": "^1",
+    "ejs": "^2",
+    "express": "^4",
+    "express-session": "^1",
+    "mongodb": "^2"
+  }
+}
