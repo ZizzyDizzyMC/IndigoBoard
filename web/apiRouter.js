@@ -8,7 +8,7 @@ function apiRouter(_server, _webserver) {
 		res.send("dummy api docs");
 	});
 	
-	_webserver.ger('/api/v1/images', function(req, res) {
+	_webserver.get('/api/v1/images', function(req, res) {
 		res.setHeader('Content-Type', 'application/json');
 		res.send(JSON.stringify({ ping: "pong" }));
 	})
