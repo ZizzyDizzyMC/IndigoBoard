@@ -1,5 +1,5 @@
 // Import the sub webserver parts
-const Users = require("./users.js"), Router = require('./router.js'), Config = require('../config.json')
+const Users = require("./users.js"), Router = require('./router.js'), Config = require('../config.json'), apiRouter = require('./apiRouter.js')
 const express = require('express'), cookieParser = require('cookie-parser'), session = require('express-session'), bodyParser = require('body-parser');
 
 
@@ -51,6 +51,9 @@ function Server(_parent) {
 	// Web routing
 	new Router(this, this.webapp);
 	new Users(this, this.webapp);
+	if (Config["api-enabled"]){
+		new apiRouter(this, this.webapp);
+	}
 
 	// Take care of non existing pages
 	this.webapp.get('*', function(req, res) {
