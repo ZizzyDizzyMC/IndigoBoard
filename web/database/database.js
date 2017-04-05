@@ -7,7 +7,8 @@ const dbUsers = require('./db_users.js');
 
 function Database(_parent) {
 
-	this.DatabaseUrl = "mongodb://localhost:27017/forums"; // Will need to change this k
+	// The local url of the database
+	this.DatabaseUrl = "mongodb://localhost:27017/board"; // Will need to change this k
 
 	// Used to connect to the db
 	this.connect = function(callback) {
