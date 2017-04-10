@@ -34,6 +34,7 @@ function Server(_parent) {
 	// Generate the options for EJS
 	this.generateOptions = function(_title, _req, callback) {
 		const options = {
+			name: Config.name,
 			title: _title
 		};
 
@@ -62,7 +63,7 @@ function Server(_parent) {
 
 	// Launch the web server
 	this.webapp.listen(Config.port, function() {
-		console.log(Config.loadedMessage);
+		console.log("Server listening on the port: " + Config.port);
 	});
 }
 

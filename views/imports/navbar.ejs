@@ -1,0 +1,12 @@
+<header>
+	<a href="/"><%- name %></a>
+	<div class="right-navbar">
+		<% if(!loggedIn) { %>
+			<a href="/user/register">Register</a>
+			<a href="/user/login">Login</a>
+		<% } else { %>
+			<a href="/users/<%- username %>"><%- username %></a>
+			<a href="/user/logout/">Logout</a>
+		<% } %>
+	</div>
+</header>

@@ -1,8 +1,7 @@
 {
-	"name": "The name of the imageboard",
+	"name": "Indigoboard",
 	"api-enabled": "true",
 	"port": "6969",
 	"debug": "true",
-	"version": "Early access alpha survival game",
-	"loadedMessage": "It's ready my dudes"
+	"version": "Early access alpha survival game"
 }

@@ -23,7 +23,13 @@ function Users(_server, _webserver) {
 	});
 
 	_webserver.get("/user/login", function(req, res) {
-		res.render("imports/login-form"); // CHANGE THIS HOLY SHIT PLEASE
+		_server.generateOptions("Login", req, function(options) {
+			if(options.loggedIn) {
+				res.redirect("index");
+			} else {
+				res.render("login", options);
+			}
+		});
 	});
 
 	// User login without javacript
@@ -62,6 +68,17 @@ function Users(_server, _webserver) {
 		} else {
 			errorHandler("No username or password was specified.", req.get("Referrer"), res);
 		}
+	});
+
+	// Return the registration page
+	_webserver.get("/user/register", function(req, res) {
+		_server.generateOptions("Register", req, function(options) {
+			if(options.loggedIn) {
+				res.redirect("index");
+			} else {
+				res.render("register", options);
+			}
+		});
 	});
 
 	// User registration without javascript
@@ -112,8 +129,8 @@ function Users(_server, _webserver) {
 	});
 
 	// Log an user out
-	_webserver.post("/user/logout", function(req, res) {
-		if(req.session.user) {
+	_webserver.get("/user/logout", function(req, res) {
+		if(req.session.username) {
 			req.session.destroy(function(err) {
 				if(err) {
 					errorHandler("Couldn't log the user out ???", req.get("Referrer"), res);
@@ -121,7 +138,7 @@ function Users(_server, _webserver) {
 					errorHandler("The user was logged out correctly.", req.get("Referrer"), res);
 				}
 			});
-		} else if(req.signedCookies.user) {
+		} else if(req.signedCookies.username) {
 			try {
 				res.clearCookie("user");
 				errorHandler("The user was logged out correctly.", req.get("Referrer"), res);
