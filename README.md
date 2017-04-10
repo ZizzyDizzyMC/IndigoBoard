@@ -4,17 +4,25 @@ A taggable "booru-style" imageboard written in Node.js
 Written in collaboration with @MikeColeCo and @TheJumono
 
 # Requirements
-NodeJS
-NPM
-MongoDB
+1. NodeJS
+2. NPM
+3. MongoDB
 
-# To setup
+# Installation
 
-Git clone this repository into a folder.
-Run "npm install" inside that folder.
-Create a folder named "mongo" inside "web/database".
-Run "./mongo.sh" to start up the mongo server.
-Connect to the database at least once and do "use board" to generate the database.
-(Note, you can disconnect afterwards, the code will take care of the rest)
+1. `git clone https://github.com/oedipuscomplex/Indigoboard.git`
+2. `npm install`
+3. Create a folder called 'mongo' in 'web/database/'.
+4. `cd web/database/ && ./mongo.sh` to start the mongo server.
+5. Connect to the database.
+6. `use board`
+7. Disconnect from the database.
 
-(Please reformat this markdown document for me, its late and I'm tired lol.)
+# Configuration
+The file `config.json` has a few configuration options.
+
+* `"name"`: The imageboard name.
+* `"api-enabled"`: Whether or not there should be API access.
+* `"port"`: The port Indigoboard should run off of.
+* `"debug"`: Whether this is a debugging or production instance.
+* `"version"`: Board version, should not need to be touched.
