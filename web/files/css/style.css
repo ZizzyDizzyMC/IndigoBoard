@@ -8,24 +8,25 @@ body {
 }
 
 header {
-	background-color: #3F51B5;
-	position: absolute;
-	width: 100%;
-	height: 40px;
-	line-height: 40px;
-	top: 0;
+        background-color: #3F51B5;
+        position: absolute;
+        width: 100%;
+        height: 5%;
+        line-height: 200%;
+        top: 0;
 }
 
 header a {
 
-	color: white;
-	font-family: Arial;
-	font-size: 20px;
-	padding: 9px;
-	background-color: #3F51B5;
-	transition: background-color .2s;
-	text-decoration: none;
-	margin: 0;
+        color: white;
+        font-family: Arial;
+        font-size: 20px;
+        height: 100%;
+        padding: 0 8px;
+        background-color: #3F51B5;
+        transition: background-color .2s;
+        text-decoration: none;
+        margin: 0;
 }
 
 header a:hover {
