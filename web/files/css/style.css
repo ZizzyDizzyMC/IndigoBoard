@@ -8,29 +8,33 @@ body {
 }
 
 header {
-        background-color: #3F51B5;
-        position: absolute;
-        width: 100%;
-        height: 5%;
-        line-height: 200%;
-        top: 0;
+	background-color: #3F51B5;
+	position: absolute;
+	width: 100%;
+	height: 35px;
+	top: 0;
+	line-height: 35px;
 }
 
 header a {
-
-        color: white;
-        font-family: Arial;
-        font-size: 20px;
-        height: 100%;
-        padding: 0 8px;
-        background-color: #3F51B5;
-        transition: background-color .2s;
-        text-decoration: none;
-        margin: 0;
+	display: inline-block;
+	color: white;
+	font-family: Arial;
+	font-size: 20px;
+	height: 100%;
+	padding: 0 7px;
+	background-color: #3F51B5;
+	transition: background-color .2s;
+	text-decoration: none;
+	margin: 0;
 }
 
 header a:hover {
 	background-color: #5C6BC0;
+}
+
+header a:active {
+	background-color: #3949AB;	
 }
 
 header .right-navbar {

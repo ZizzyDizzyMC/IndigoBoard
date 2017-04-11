@@ -3,5 +3,6 @@
 	"api-enabled": "true",
 	"port": "6969",
 	"debug": "true",
-	"version": "Early access alpha survival game"
+	"version": "Early access alpha survival game",
+	"folders": []
 }

@@ -15,9 +15,21 @@ function Users(_server, _webserver) {
 	_webserver.get("/users/:username", function(req, res) {
 		_server.indigo.database.users.isUsernameAvaible(req.params.username, function(result) {
 			if(!result) {
-				// uuh I forgot what's supposed to happen here lol
+				_server.generateOptions("User profile", req, function(options) {
+					_server.indigo.database.users.getUserId(req.params.username, function(uID) {
+						_server.indigo.database.users.getUserInfos(uID, function(infos) {
+							options["creationDate"] = infos.created;
+							options["profilename"] = infos.username;
+							options["creationEmail"] = infos.email;
+
+							res.render("user", options);
+						});
+					});
+					
+					
+				});
 			} else {
-				errorHandler("User not found", "/users/", res);
+				res.redirect("index");
 			}
 		});
 	});

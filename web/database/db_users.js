@@ -81,7 +81,7 @@ function DatabaseUsers(_database) {
 
 	// Add an user to the databse
 	this.createUser = function(_username, _password, _email, callback) {
-		this.isUsernameAvaible(_username, function(result) {
+		self.isUsernameAvaible(_username, function(result) {
 			if(result) {
 				self.verifyUsername(_username, function(result) {
 					if(result) {
@@ -149,11 +149,20 @@ function DatabaseUsers(_database) {
 		});
 	}
 
-	// Get user information via hash/session/cookie
+	// Get specific user information via hash/session/cookie
 	this.getUserInfo = function(_userID, _info, callback) {
 		_database.connect(function(db) {
 			db.collection(cName).find({_id:_database.ObjectId(_userID)}).toArray(function(err, result) {
 				callback(result[0][_info]);
+			});
+		});
+	}
+
+	// Get all user informations
+	this.getUserInfos = function(_userID, callback) {
+		_database.connect(function(db) {
+			db.collection(cName).find({_id:_database.ObjectId(_userID)}).toArray(function(err, result) {
+				callback(result[0]);
 			});
 		});
 	}
