@@ -25,8 +25,6 @@ function Users(_server, _webserver) {
 							res.render("user", options);
 						});
 					});
-					
-					
 				});
 			} else {
 				res.redirect("index");

@@ -3,7 +3,7 @@
 */
 
 const MongoClient = require('mongodb').MongoClient, ObjectId = require('mongodb').ObjectId;
-const dbUsers = require('./db_users.js');
+const dbUsers = require('./db_users.js'), dbImages = require('./db_images.js');
 
 function Database(_parent) {
 
@@ -26,6 +26,7 @@ function Database(_parent) {
 
 	// Setup database access point
 	this.users = new dbUsers(this);
+	this.imgs = new dbImages(this);
 }
 
 module.exports = Database;

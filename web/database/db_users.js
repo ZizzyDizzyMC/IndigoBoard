@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt-nodejs');
 function DatabaseUsers(_database) {
 
 	const cName = "users"; // Name of the collection
-	const self = this; // Setting a pointer variable to the 'this' object 
+	const self = this; // Setting a pointer variable to the 'this' object
 
 	// Check if user exists / Get user's id 
 	this.getUserId = function(_string, callback) {
@@ -93,7 +93,7 @@ function DatabaseUsers(_database) {
 											_database.connect(function(db) {
 												const creationDate = new Date();
 
-												db.collection("users").insert({
+												db.collection(cName).insert({
 													username: _username,
 													password: hash,
 													email: _email,

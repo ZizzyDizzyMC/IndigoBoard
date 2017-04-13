@@ -65,6 +65,8 @@ function Server(_parent) {
 	this.webapp.listen(Config.port, function() {
 		console.log("Server listening on the port: " + Config.port);
 	});
+
+	
 }
 
 module.exports = Server;
