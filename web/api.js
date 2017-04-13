@@ -16,7 +16,7 @@ function apiRouter(_server, _webserver) {
 	_webserver.get('/api/v1/search', function(req, res) {
 		res.setHeader('Content-Type', 'application/json');
 		res.send(JSON.stringify({ ping: "pong" }));
-	})
+	})		
 	
 	_webserver.post('/api/v1/upvote', function(req, res) {
 		res.setHeader('Content-Type', 'application/json');
