@@ -140,27 +140,37 @@ function Users(_server, _webserver) {
 		}
 	});
 
-	// Log an user out
+	// Log the user out
 	_webserver.get("/user/logout", function(req, res) {
-		if(req.session.username) {
-			req.session.destroy(function(err) {
-				if(err) {
-					errorHandler("Couldn't log the user out ???", req.get("Referrer"), res);
-				} else {
+		if (req.session.username || req.signedCookies.username) {
+			if (req.session.username) {
+				req.session.destroy(function(err) {
+					if(err){
+						errorHandler("Couldn't log the user out ???", req.get("Referrer"), res);
+					} else {
+						errorHandler("The user was logged out correctly.", req.get("Referrer"), res);
+					}
+				});
+			}
+			
+			if (req.signedCookies.username) {
+				try {
+					res.clearCookie("userID");
+					res.clearCookie("username");
 					errorHandler("The user was logged out correctly.", req.get("Referrer"), res);
+				} catch(err) {
+					errorHandler("Couldn't log the user out ???", req.get("Referrer"), res);
 				}
-			});
-		} else if(req.signedCookies.username) {
-			try {
-				res.clearCookie("user");
-				errorHandler("The user was logged out correctly.", req.get("Referrer"), res);
-			} catch(err) {
-				errorHandler("Couldn't log the user out ???", req.get("Referrer"), res);
 			}
 		} else {
 			errorHandler("No user is logged in.", req.get("Referrer"), res);
 		}
 	});
+
+
+
+
+
 }
 
 module.exports = Users;
