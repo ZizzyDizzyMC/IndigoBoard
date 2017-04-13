@@ -1,5 +1,5 @@
 // Import the sub webserver parts
-const Users = require("./users.js"), Router = require('./router.js'), Config = require('../config.json'), api = require('./api.js')
+const Users = require("./users.js"), Router = require('./router.js'), Config = require('../config.json'), api = require('./api.js'), Images = require('./images.js')
 const express = require('express'), cookieParser = require('cookie-parser'), session = require('express-session'), bodyParser = require('body-parser');
 
 
@@ -52,6 +52,7 @@ function Server(_parent) {
 	// Web routing
 	new Router(this, this.webapp);
 	new Users(this, this.webapp);
+	new Images(this, this.webapp);
 	if (Config["api-enabled"]){
 		new api(this, this.webapp);
 	}
@@ -66,7 +67,7 @@ function Server(_parent) {
 		console.log("Server listening on the port: " + Config.port);
 	});
 
-	
+
 }
 
 module.exports = Server;

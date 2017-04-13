@@ -6,7 +6,7 @@ function Indigoboard() {
 	this.webserver = new Server(this); // Load the web server tbh
 
 	console.log("finna test the user databse code.");
-	this.database.imgs.addImage("/run/media/twilight/Stuff/Images/celestavi.png", "safe,gay,celestia,pink", "ADMIN", null, null, null, function(res) {
+	this.database.imgs.addImage("/home/flora/Pictures/wallpaper.png", "safe,gay,celestia,pink", "ADMIN", null, null, null, function(res) {
 		console.log(res);
 	});
 }
