@@ -47,6 +47,9 @@ function Images(_server, _webserver) {
 		if(req.files.length == 0) // Is a file uploaded ?
 			res.redirect("/upload");
 
+		if (Config["allow-anonymous"] && !(req.session.userID || req.signedCookies.userID))
+			res.redirect("/");
+
 		if(req.body.tags == "") // Tags should never be empty
 			res.redirect("/upload"); // Temporary solution, I'm lazy lol
 

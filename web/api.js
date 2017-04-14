@@ -24,7 +24,7 @@ function apiRouter(_server, _webserver) {
 					uploader : result.uploader,
 					uploaded : result.uploadDate,
 					md5 : result.hash,
-					file : Config["folder"] + result._id,
+					url : "/imgs/" + result._id,
 					rating : result.rating
 				}))
 			}
