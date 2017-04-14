@@ -2,7 +2,7 @@
 	Database code that take care of everything image related.
 */
 
-const fs = require('fs'), bcrypt = require('bcrypt-nodejs'), crypto = require('crypto');
+const fs = require('fs'), bcrypt = require('bcrypt-nodejs');
 
 function databaseImages(_database) {
 
@@ -20,39 +20,38 @@ function databaseImages(_database) {
 		});
 	}
 
-	this.addImage = function(_path, _tags, _uploader, _artists, _source, _rating, callback) {
-
-		if(fs.existsSync(_path)) {
-
-			// Calculate the hash at first
-			fs.readFile(_path, function(err, data) {
-				const hash = crypto.createHash("md5").update(data, 'utf-8').digest('hex');
-				console.log(hash);
-
-				_database.connect(function(db) {
-					const creationDate = new Date();
-
-					db.collection(cName).insert({
-						hash: hash,
-						image: _path,
-						tags: _tags,
-						artists: _artists || "unknown",
-						source: _source || "unknown",
-						rating: _rating || "safe",
-						uploader: _uploader,
-						uploadDate: creationDate
-					}, function(err, result) {
-						if(err)
-							callback("error");
-						else
-							callback("success");
-					});
-				});
+	this.getImageAtIndex = function(_index, callback) {
+		_database.connect(function(db) {
+			console.log(_index);
+			db.collection(cName).find().skip(_index).limit(1).toArray(function(err, result) {
+				if(result.length > 0) 
+					callback(result[0]);
+				else
+					callback("not found");
 			});
+		});
+	}
 
-		} else {
-			console.error("File not found!");
-		}
+	this.addImage = function(_hash, _path, _tags, _uploader, _artists, _source, _rating, callback) {
+		_database.connect(function(db) {
+			const creationDate = new Date();
+
+			db.collection(cName).insert({
+				hash: _hash,
+				path: _path,
+				tags: _tags,
+				artists: _artists || "unknown",
+				source: _source || "unknown",
+				rating: _rating || "safe",
+				uploader: _uploader,
+				uploadDate: creationDate
+			}, function(err, result) {
+				if(err)
+					callback("error", null);
+				else
+					callback(null, result.ops[0]._id);
+			});
+		});
 	}
 }
 

@@ -2,32 +2,87 @@
 	Image routing
 */
 
-const Config = require('../config.json')
+const fs = require('fs'), path = require('path'), crypto = require('crypto');
+const Config = require('../config.json');
 
 function Images(_server, _webserver) {
-
-	function errorHandler(_error, _url, _res) {
-		_res.render("error", {title:"Error", error:_error, return_url:_url});
-	}
-
 	_webserver.get("/view/:imageid", function(req, res) {
-		// so it doesn't error when finding the id in the database
-		if (req.params.imageid.length < 24) {
-			errorHandler("The specified image wasn't found.", req.get("Referrer"), res)
+		function queryCallback(result) {
+			if (result == "not found") {
+				res.redirect("/");
+			} else {
+				_server.generateOptions(Config["name"] + " - " + result["tags"], req, function(options) {
+					options.tags = result.tags;
+					options.source = "/imgs/" + result._id;
+					res.render("view", options);
+				});
+			}
+		}
+
+		if (req.params.imageid.length == 24) { // If the user is looking for an image via its id
+			_server.indigo.database.imgs.getImage(req.params.imageid, queryCallback);
 		} else {
-			_server.indigo.database.imgs.getImage(req.params.imageid, function(result) {
-				if (result == "not found"){
-					errorHandler("The specified image wasn't found.", req.get("Referrer"), res);
-				} else {
-					_server.generateOptions(Config["name"] + " - " + result["tags"], req, function(options) {
-						options.tags = result.tags
-						options.source = result.image
-						res.render("view", options)
+			if(!isNaN(parseInt(req.params.imageid))) { // Via its index
+				_server.indigo.database.imgs.getImageAtIndex(parseInt(req.params.imageid) - 1, queryCallback);
+			} else {
+				res.redirect("/");
+			}	
+		}
+	});
+
+	_webserver.get("/upload", function(req, res) {
+		_server.generateOptions("Upload", req, function(options) {
+			res.render("upload", options);
+		})
+	});
+
+	_webserver.post("/upload", function(req, res) {
+		if(req.files.length == 0) // Is a file uploaded ?
+			res.redirect("/upload");
+
+		if(req.body.tags == "") // Tags should never be empty
+			res.redirect("/upload"); // Temporary solution, I'm lazy lol
+		
+		for(file in req.files) {
+			
+			req.files[file].mv('./' + Config["folder"] + '/tmp/' + req.files[file].name, function(err) {
+				if(err)
+					console.error("something went wrong oops lol");
+
+				fs.readFile('./' + Config["folder"] + '/tmp/' + req.files[file].name, function(err, data) {
+					const hash = crypto.createHash("md5").update(data, 'utf-8').digest('hex');
+					const subhash = hash.substring(0,2);
+					const uploader = _server.loggedUser(req) == null ? "Anonymous" : _server.loggedUser(req);
+					const finalPath = subhash + "/" + hash + path.extname(req.files[file].name);
+
+					if(!fs.existsSync("./" + Config["folder"] + "/" + subhash))
+						fs.mkdirSync("./" + Config["folder"] + "/" + subhash); // Create the subfolder
+					fs.renameSync("./" + Config["folder"] + "/tmp/" + req.files[file].name, "./imgs/" + finalPath); // Add the file to the correct folder
+					
+					_server.indigo.database.imgs.addImage(hash, finalPath, req.body.tags, uploader, req.body.artists, req.body.source, req.body.rating, function(err, data) {
+						if(err == null) {
+							res.redirect("/view/" + data);
+						} else {
+							res.redirect("/upload"); // Again, just reload the page if there's an error, not yet implemented
+						}
 					});
-				}
+				});
 			});
 		}
-});
+	});
+
+	_webserver.get("/imgs/:id", function(req, res) {
+		if(req.params.id) {
+			_server.indigo.database.imgs.getImage(req.params.id, function(data) {
+				if(data == "not found")
+					res.redirect("/");
+				else
+					res.sendFile("./" + Config["folder"] + "/" + data.path, { root : "./"});
+			});
+		} else {
+			res.status(404).send();
+		}
+	});
 }
 
 module.exports = Images;

@@ -1,0 +1,16 @@
+<form action="/upload" method="post" enctype="multipart/form-data">
+	<input type="file" name="picture" accept="image/*" value="Open file"><br/>
+	<label for="tags">Tags: </label>
+	<input type="text" name="tags" id="tags" placeholder="enter the tags here"><br/>
+	<label for="artists">Artist: </label>
+	<input type="text" name="artists" id="artists" placeholder="enter the artists here"><br/>
+	<label for="source">Source: </label>
+	<input type="text" name="source" id="source" placeholder="enter the source here"><br/>
+	<label for="rating">Rating: </label><br />
+	<select id="rating" name="rating">
+		<option value="safe">Safe</option>
+		<option value="questionnable">Questionnable</option>
+		<option value="explicit">Explicit</option>
+	</select>
+	<input type="submit" value="Upload">
+</form>
