@@ -25,4 +25,6 @@ The file `config.json` has a few configuration options.
 * `"api-enabled"`: Whether or not there should be API access.
 * `"port"`: The port Indigoboard should run off of.
 * `"debug"`: Whether this is a debugging or production instance.
+* `"allow-anonymous"`: Allow anonymous uploads. This means that a user does not have to be registered to upload.
+* `"folder"`: The folder name when returning images.
 * `"version"`: Board version, should not need to be touched.

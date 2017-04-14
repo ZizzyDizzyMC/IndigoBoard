@@ -26,25 +26,32 @@ function Images(_server, _webserver) {
 				_server.indigo.database.imgs.getImageAtIndex(parseInt(req.params.imageid) - 1, queryCallback);
 			} else {
 				res.redirect("/");
-			}	
+			}
 		}
 	});
 
 	_webserver.get("/upload", function(req, res) {
-		_server.generateOptions("Upload", req, function(options) {
-			res.render("upload", options);
-		})
+		if (Config["allow-anonymous"] && !(req.session.userID || req.signedCookies.userID)) {
+			res.redirect("/");
+		}
+		else {
+			_server.generateOptions("Upload", req, function(options) {
+				res.render("upload", options);
+			})
+		}
 	});
 
+
+	//todo: check for allow-anonymous here too
 	_webserver.post("/upload", function(req, res) {
 		if(req.files.length == 0) // Is a file uploaded ?
 			res.redirect("/upload");
 
 		if(req.body.tags == "") // Tags should never be empty
 			res.redirect("/upload"); // Temporary solution, I'm lazy lol
-		
+
 		for(file in req.files) {
-			
+
 			req.files[file].mv('./' + Config["folder"] + '/tmp/' + req.files[file].name, function(err) {
 				if(err)
 					console.error("something went wrong oops lol");
@@ -58,7 +65,7 @@ function Images(_server, _webserver) {
 					if(!fs.existsSync("./" + Config["folder"] + "/" + subhash))
 						fs.mkdirSync("./" + Config["folder"] + "/" + subhash); // Create the subfolder
 					fs.renameSync("./" + Config["folder"] + "/tmp/" + req.files[file].name, "./imgs/" + finalPath); // Add the file to the correct folder
-					
+
 					_server.indigo.database.imgs.addImage(hash, finalPath, req.body.tags, uploader, req.body.artists, req.body.source, req.body.rating, function(err, data) {
 						if(err == null) {
 							res.redirect("/view/" + data);

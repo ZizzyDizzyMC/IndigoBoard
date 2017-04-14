@@ -3,6 +3,8 @@
 	"api-enabled": "true",
 	"port": "6969",
 	"debug": "true",
-	"version": "Early access alpha survival game",
-	"folder": "imgs"
+	"folder": "imgs",
+	"allow-anonymous": "true",
+	"version": "Early access alpha survival game"
+
 }
