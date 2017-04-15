@@ -35,4 +35,4 @@ Mike: @MikeColeDotCo on twitter
 Flora: @OedipusCompiex on twitter
 
 # License 
-All code is licensed under the [GNU Lesser General Public License v3.0] (https://www.gnu.org/licenses/lgpl-3.0.en.html) unless stated otherwise.
+All code is licensed under the [GNU Lesser General Public License v3.0](https://www.gnu.org/licenses/lgpl-3.0.en.html) unless stated otherwise.
