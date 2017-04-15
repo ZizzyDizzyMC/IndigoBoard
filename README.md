@@ -1,7 +1,7 @@
 # Indigoboard
 A taggable "booru-style" imageboard written in Node.js
 
-Written in collaboration with @MikeColeCo and @TheJumono
+Currently in development, and not ready for release.
 
 # Requirements
 1. NodeJS
@@ -28,3 +28,11 @@ The file `config.json` has a few configuration options.
 * `"allow-anonymous"`: Allow anonymous uploads. This means that an user does not have to be registered to upload.
 * `"folder"`: The folder name when returning images.
 * `"version"`: Board version, should not need to be touched.
+
+# Contact
+Zoey: @TheJumono on twitter
+Mike: @MikeColeDotCo on twitter
+Flora: @OedipusCompiex on twitter
+
+# License 
+All code is licensed under the [GNU Lesser General Public License v3.0] (https://www.gnu.org/licenses/lgpl-3.0.en.html) unless stated otherwise.
