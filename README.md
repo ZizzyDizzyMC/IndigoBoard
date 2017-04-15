@@ -31,7 +31,9 @@ The file `config.json` has a few configuration options.
 
 # Contact
 Zoey: @TheJumono on twitter
+
 Mike: @MikeColeDotCo on twitter
+
 Flora: @OedipusCompiex on twitter
 
 # License 
