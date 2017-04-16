@@ -6,7 +6,7 @@ const fs = require('fs'), path = require('path'), crypto = require('crypto');
 const Config = require('../config.json');
 
 function Images(_server, _webserver) {
-	_webserver.get("/view/:imageid", function(req, res) {
+	_webserver.get("/images/view/:imageid", function(req, res) {
 		function queryCallback(result) {
 			if (result == "not found") {
 				res.redirect("/");
@@ -30,6 +30,34 @@ function Images(_server, _webserver) {
 		}
 	});
 
+	_webserver.get("/images/", function(req, res) {
+
+	});
+
+	_webserver.get("/images/search", function(req, res) {
+		if(!req.query.tags)
+			res.redirect("/");
+		else {
+			_server.indigo.database.imgs.imageSearch(req.query.tags, null, null, function(result) {
+				if(result.length > 0) {
+					_server.generateOptions("Search results", req, function(options) {
+						options.tags = req.query.tags;
+						options.images = result;
+
+						res.render("gallery", options);
+					});				
+				} else {
+					res.redirect("/");
+				}
+
+			});
+		}
+	});
+
+	_webserver.get("/images/page/:index", function(req, res) {
+
+	});
+
 	_webserver.get("/upload", function(req, res) {
 		if (Config["allow-anonymous"] && !(req.session.userID || req.signedCookies.userID)) {
 			res.redirect("/");
@@ -37,7 +65,7 @@ function Images(_server, _webserver) {
 		else {
 			_server.generateOptions("Upload", req, function(options) {
 				res.render("upload", options);
-			})
+			});
 		}
 	});
 
@@ -71,7 +99,7 @@ function Images(_server, _webserver) {
 
 					_server.indigo.database.imgs.addImage(hash, finalPath, req.body.tags, uploader, req.body.artists, req.body.source, req.body.rating, function(err, data) {
 						if(err == null) {
-							res.redirect("/view/" + data);
+							res.redirect("/images/view/" + data);
 						} else {
 							res.redirect("/upload"); // Again, just reload the page if there's an error, not yet implemented
 						}

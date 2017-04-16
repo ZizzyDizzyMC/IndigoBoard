@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<%- include('imports/header'); %>
+
+	<body>
+		<%- include('imports/navbar'); %>
+
+		<main>
+			<% for(var img in images) { %>
+			<% 		img_id = images[img]._id %>
+				<%- include('imports/image_card'); %>
+			<% } %>
+		</main>
+	</body>
+</html>

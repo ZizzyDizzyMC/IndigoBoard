@@ -6,5 +6,5 @@
 
 	"debug": true,
 	"api-enabled": true,
-	"allow-anonymous": false
+	"allow-anonymous": true
 }

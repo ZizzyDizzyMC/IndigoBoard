@@ -53,7 +53,8 @@ function Server(_parent) {
 		const options = {
 			name: Config.name,
 			title: _title,
-			anonup: Config["allow-anonymous"]
+			anonup: Config["allow-anonymous"],
+			searchTags: _req.query.tags || ""
 		};
 
 		if(_req.signedCookies.userID || _req.session.userID) {
