@@ -40,6 +40,11 @@ function Server(_parent) {
 	// For sessions
 	this.webapp.use(session(sessionOptions));
 
+	// Is an user logged in ?
+	this.isUserLoggedIn = function(_req) {
+		return this.loggedUser(_req) != null ? true : false;
+	}
+
 	// Get logged in user
 	this.loggedUser = function(_req) {
 		if(_req.signedCookies.userID || _req.session.userID)

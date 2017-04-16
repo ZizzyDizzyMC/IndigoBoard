@@ -35,23 +35,18 @@ function Images(_server, _webserver) {
 	});
 
 	_webserver.get("/images/search", function(req, res) {
-		if(!req.query.tags)
-			res.redirect("/");
-		else {
-			_server.indigo.database.imgs.imageSearch(req.query.tags, null, null, function(result) {
-				if(result.length > 0) {
-					_server.generateOptions("Search results", req, function(options) {
-						options.tags = req.query.tags;
-						options.images = result;
+		_server.indigo.database.imgs.imageSearch(req.query.tags, null, null, function(result) {
+			if(result.length > 0) {
+				_server.generateOptions("Search results", req, function(options) {
+					options.tags = req.query.tags;
+					options.images = result;
 
-						res.render("gallery", options);
-					});				
-				} else {
-					res.redirect("/");
-				}
-
-			});
-		}
+					res.render("gallery", options);
+				});				
+			} else {
+				res.redirect("/");
+			}
+		});
 	});
 
 	_webserver.get("/images/page/:index", function(req, res) {
@@ -59,13 +54,12 @@ function Images(_server, _webserver) {
 	});
 
 	_webserver.get("/upload", function(req, res) {
-		if (Config["allow-anonymous"] && !(req.session.userID || req.signedCookies.userID)) {
-			res.redirect("/");
-		}
-		else {
+		if(Config["allow-anonymous"] || _server.isUserLoggedIn(req)) {
 			_server.generateOptions("Upload", req, function(options) {
 				res.render("upload", options);
 			});
+		} else {
+			res.redirect("/");
 		}
 	});
 
@@ -75,37 +69,38 @@ function Images(_server, _webserver) {
 		if(req.files.length == 0) // Is a file uploaded ?
 			res.redirect("/upload");
 
-		if (Config["allow-anonymous"] && !(req.session.userID || req.signedCookies.userID))
-			res.redirect("/");
-
 		if(req.body.tags == "") // Tags should never be empty
 			res.redirect("/upload"); // Temporary solution, I'm lazy lol
 
-		for(file in req.files) {
+		if (Config["allow-anonymous"] || _server.isUserLoggedIn(req)) {
+			for(file in req.files) {
 
-			req.files[file].mv('./' + Config["folder"] + '/tmp/' + req.files[file].name, function(err) {
-				if(err)
-					console.error("something went wrong oops lol");
+				req.files[file].mv('./' + Config["folder"] + '/tmp/' + req.files[file].name, function(err) {
+					if(err)
+						console.error("something went wrong oops lol");
 
-				fs.readFile('./' + Config["folder"] + '/tmp/' + req.files[file].name, function(err, data) {
-					const hash = crypto.createHash("md5").update(data, 'utf-8').digest('hex');
-					const subhash = hash.substring(0,2);
-					const uploader = _server.loggedUser(req) == null ? "Anonymous" : _server.loggedUser(req);
-					const finalPath = subhash + "/" + hash + path.extname(req.files[file].name);
+					fs.readFile('./' + Config["folder"] + '/tmp/' + req.files[file].name, function(err, data) {
+						const hash = crypto.createHash("md5").update(data, 'utf-8').digest('hex');
+						const subhash = hash.substring(0,2);
+						const uploader = _server.loggedUser(req) == null ? "Anonymous" : _server.loggedUser(req);
+						const finalPath = subhash + "/" + hash + path.extname(req.files[file].name);
 
-					if(!fs.existsSync("./" + Config["folder"] + "/" + subhash))
-						fs.mkdirSync("./" + Config["folder"] + "/" + subhash); // Create the subfolder
-					fs.renameSync("./" + Config["folder"] + "/tmp/" + req.files[file].name, "./imgs/" + finalPath); // Add the file to the correct folder
+						if(!fs.existsSync("./" + Config["folder"] + "/" + subhash))
+							fs.mkdirSync("./" + Config["folder"] + "/" + subhash); // Create the subfolder
+						fs.renameSync("./" + Config["folder"] + "/tmp/" + req.files[file].name, "./imgs/" + finalPath); // Add the file to the correct folder
 
-					_server.indigo.database.imgs.addImage(hash, finalPath, req.body.tags, uploader, req.body.artists, req.body.source, req.body.rating, function(err, data) {
-						if(err == null) {
-							res.redirect("/images/view/" + data);
-						} else {
-							res.redirect("/upload"); // Again, just reload the page if there's an error, not yet implemented
-						}
+						_server.indigo.database.imgs.addImage(hash, finalPath, req.body.tags, uploader, req.body.artists, req.body.source, req.body.rating, function(err, data) {
+							if(err == null) {
+								res.redirect("/images/view/" + data);
+							} else {
+								res.redirect("/upload"); // Again, just reload the page if there's an error, not yet implemented
+							}
+						});
 					});
 				});
-			});
+			}
+		} else {
+			res.redirect("/");
 		}
 	});
 
