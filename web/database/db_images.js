@@ -25,11 +25,21 @@ function databaseImages(_database) {
 			tagsArray = _tags.split(',');
 
 			var query = {}
+			inArray = [];
+			ninArray = [];
 
 			for (var i = 0; i < tagsArray.length; i++){
-				tagsArray[i] = tagsArray[i].trim()
+				if (tagsArray[i].startsWith("-")){
+					ninArray.push(tagsArray[i].trim().substring(1))
+				} else {
+				inArray.push(tagsArray[i].trim())
 			}
-			query.tags = {$in : tagsArray}
+			}
+			if (inArray.length == 0){
+				query.tags = {$nin : ninArray}
+			} else {
+				query.tags = {$in : inArray, $nin : ninArray}
+			}
 
 			db.collection(cName).find(query).toArray(function(err, result){
 				if(err)
