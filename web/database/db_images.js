@@ -32,9 +32,12 @@ function databaseImages(_database) {
 				? parseInt(_page)
 				: 0;
 
-			var query = {};
-			var inArray = []; 
+			var query = {
+				$and: []
+			};
+
 			var ninArray = [];
+			var inArray = [];
 
 			for(var tag in tagsArray) {
 				tagsArray[tag].startsWith("-")
@@ -42,10 +45,17 @@ function databaseImages(_database) {
 					: inArray.push(tagsArray[tag].trim());
 			}
 
-			query.tags = !inArray.length
-				? {$nin : ninArray} 
-				: {$in : inArray, $nin: ninArray};
+			for(var _nin in ninArray) {
+				query.and.push({
+					tags: {'$nin': [ninArray[_nin]]}
+				});
+			}
 
+			for(var _in in inArray) {
+				query["$and"].push({
+					tags: {'$in': [inArray[_in]]}
+				});
+			}
 
 			db.collection(cName).find(query).skip(_page).limit(_limit).toArray(function(err, result) {
 				err 
