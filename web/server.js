@@ -52,7 +52,8 @@ function Server(_parent) {
 	this.generateOptions = function(_title, _req, callback) {
 		const options = {
 			name: Config.name,
-			title: _title
+			title: _title,
+			anonup: Config["allow-anonymous"]
 		};
 
 		if(_req.signedCookies.userID || _req.session.userID) {

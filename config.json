@@ -1,10 +1,10 @@
 {
 	"name": "Indigoboard",
-	"api-enabled": "true",
-	"port": "6969",
-	"debug": "true",
-	"folder": "imgs",
-	"allow-anonymous": "true",
-	"version": "Early access alpha survival game"
+	"port": 6969,
+	"version": "WIP",
+	"folder": "./imgs",
 
+	"debug": true,
+	"api-enabled": true,
+	"allow-anonymous": false
 }

@@ -20,9 +20,17 @@ function databaseImages(_database) {
 		});
 	}
 
-	this.imageSearch = function(_tags, _limit, _page, callback){
-		_database.connect(function(db){
+	this.imageSearch = function(_tags, _limit, _page, callback) {
+		_database.connect(function(db) {
 			const tagsArray = _tags.split(',');
+
+			_limit = !isNaN(parseInt(_limit)) 
+				? parseInt(_limit)
+				: 30;
+
+			_page = !isNaN(parseInt(_page)) 
+				? parseInt(_page)
+				: 0;
 
 			var query = {};
 			var inArray = []; 
@@ -39,15 +47,13 @@ function databaseImages(_database) {
 				: {$in : inArray, $nin: ninArray};
 
 
-			db.collection(cName).find(query).skip(_page || 0).limit(_limit || 30).toArray(function(err, result) {
-				if(err)
-					callback("error");
-				else{
-					callback(result);
-			};
+			db.collection(cName).find(query).skip(_page).limit(_limit).toArray(function(err, result) {
+				err 
+					? callback("error")
+					: callback(result);
+			});
 		});
-	})
-}
+	}
 
 	this.getImageAtIndex = function(_index, callback) {
 		_database.connect(function(db) {
