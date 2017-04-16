@@ -47,7 +47,7 @@ function apiRouter(_server, _webserver) {
 			res.send(JSON.stringify({"error" : "You need tags!"}));
 		}
 		else{
-		_server.indigo.database.imgs.imageSearch(req.query.tags, function(result){
+		_server.indigo.database.imgs.imageSearch(req.query.tags, null, null, function(result){
 			if (result == "error"){
 				res.send(JSON.stringify({"error" : "Something went wrong!"}));
 			}

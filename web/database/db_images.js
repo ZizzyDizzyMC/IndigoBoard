@@ -20,32 +20,30 @@ function databaseImages(_database) {
 		});
 	}
 
-	this.imageSearch = function(_tags, callback){
+	this.imageSearch = function(_tags, _limit, _page, callback){
 		_database.connect(function(db){
-			tagsArray = _tags.split(',');
+			const tagsArray = _tags.split(',');
 
-			var query = {}
-			inArray = [];
-			ninArray = [];
+			var query = {};
+			var inArray = []; 
+			var ninArray = [];
 
-			for (var i = 0; i < tagsArray.length; i++){
-				if (tagsArray[i].startsWith("-")){
-					ninArray.push(tagsArray[i].trim().substring(1))
-				} else {
-				inArray.push(tagsArray[i].trim())
-			}
-			}
-			if (inArray.length == 0){
-				query.tags = {$nin : ninArray}
-			} else {
-				query.tags = {$in : inArray, $nin : ninArray}
+			for(var tag in tagsArray) {
+				tagsArray[tag].startsWith("-")
+					? ninArray.push(tagsArray[tag].trim().substring(1)) 
+					: inArray.push(tagsArray[tag].trim());
 			}
 
-			db.collection(cName).find(query).toArray(function(err, result){
+			query.tags = !inArray.length
+				? {$nin : ninArray} 
+				: {$in : inArray, $nin: ninArray};
+
+
+			db.collection(cName).find(query).skip(_page || 0).limit(_limit || 30).toArray(function(err, result) {
 				if(err)
-					callback("error")
+					callback("error");
 				else{
-					callback(result)
+					callback(result);
 			};
 		});
 	})
@@ -66,11 +64,10 @@ function databaseImages(_database) {
 	this.addImage = function(_hash, _path, _tags, _uploader, _artists, _source, _rating, callback) {
 		_database.connect(function(db) {
 			const creationDate = new Date();
-
 			var tagsArray = _tags.split(',');
 
-			for (var i = 0; i < tagsArray.length; i++){
-				tagsArray[i] = tagsArray[i].trim()
+			for(var tag in tagsArray) {
+				tagsArray[tag] = tagsArray[tag].trim();
 			}
 
 			db.collection(cName).insert({
