@@ -20,11 +20,32 @@ function databaseImages(_database) {
 		});
 	}
 
+	this.imageSearch = function(_tags, callback){
+		_database.connect(function(db){
+			tagsArray = _tags.split(',');
+
+			var query = {}
+
+			for (var i = 0; i < tagsArray.length; i++){
+				tagsArray[i] = tagsArray[i].trim()
+			}
+			query.tags = {$in : tagsArray}
+
+			db.collection(cName).find(query).toArray(function(err, result){
+				if(err)
+					callback("error")
+				else{
+					callback(result)
+			};
+		});
+	})
+}
+
 	this.getImageAtIndex = function(_index, callback) {
 		_database.connect(function(db) {
 			console.log(_index);
 			db.collection(cName).find().skip(_index).limit(1).toArray(function(err, result) {
-				if(result.length > 0) 
+				if(result.length > 0)
 					callback(result[0]);
 				else
 					callback("not found");
@@ -36,10 +57,16 @@ function databaseImages(_database) {
 		_database.connect(function(db) {
 			const creationDate = new Date();
 
+			var tagsArray = _tags.split(',');
+
+			for (var i = 0; i < tagsArray.length; i++){
+				tagsArray[i] = tagsArray[i].trim()
+			}
+
 			db.collection(cName).insert({
 				hash: _hash,
 				path: _path,
-				tags: _tags,
+				tags: tagsArray,
 				artists: _artists || "unknown",
 				source: _source || "unknown",
 				rating: _rating || "safe",
