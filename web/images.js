@@ -31,26 +31,51 @@ function Images(_server, _webserver) {
 	});
 
 	_webserver.get("/images/", function(req, res) {
-
+		_server.indigo.database.imgs.imageSearch("", null, null, function(err, imgs, pages) {
+			_server.generateOptions("Gallery", req, function(options) {
+				options.images = imgs;
+				res.render("gallery", options);
+			});
+		});
 	});
 
 	_webserver.get("/images/search", function(req, res) {
-		_server.indigo.database.imgs.imageSearch(req.query.tags, null, null, function(result) {
-			if(result.length > 0) {
-				_server.generateOptions("Search results", req, function(options) {
-					options.tags = req.query.tags;
-					options.images = result;
-
-					res.render("gallery", options);
-				});				
+		_server.indigo.database.imgs.imageSearch(req.query.tags, null, req.query.page || null, function(err, imgs, pages) {
+			if(req.query.tags.length == 0) {
+				res.redirect("/images/");
 			} else {
-				res.redirect("/");
+				if(imgs.length > 0) {
+					_server.generateOptions("Search results", req, function(options) {
+						options.tags = req.query.tags;
+						options.images = imgs;
+						options.pages = pages;
+
+						res.render("gallery", options);
+					});				
+				} else {
+					res.redirect("/");
+				}
 			}
 		});
 	});
 
 	_webserver.get("/images/page/:index", function(req, res) {
+		if(isNaN(parseInt(req.params.index))) {
+			res.redirect("/images/");
+		} else {
+			_server.indigo.database.imgs.imageSearch("", null, req.params.index, function(err, imgs, pages) {
+				if(imgs.length > 0) {
+					_server.generateOptions("Gallery", req, function(options) {
+						options.images = imgs;
+						options.pages = pages;
 
+						res.render("gallery", options);
+					});
+				} else {
+					res.redirect("/images/");
+				}
+			});
+		}
 	});
 
 	_webserver.get("/upload", function(req, res) {

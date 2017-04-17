@@ -47,13 +47,13 @@ function apiRouter(_server, _webserver) {
 			res.send(JSON.stringify({"error" : "You need tags!"}));
 		}
 		else{
-		_server.indigo.database.imgs.imageSearch(req.query.tags, req.query.page || null, req.query.limit || null, function(result){
-			if (result == "error"){
+		_server.indigo.database.imgs.imageSearch(req.query.tags, req.query.limit || null, req.query.page || null, function(err, imgs, pages) {
+			if (err) {
 				res.send(JSON.stringify({"error" : "Something went wrong!"}));
 			}
 			else {
 				a = []
-				for (var i = 0; i < result.length; i++){
+				for (var i = 0; i < result.length; i++) {
 					r = result[i]
 					o = {
 						id : r._id,

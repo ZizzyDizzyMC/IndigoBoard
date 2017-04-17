@@ -26,12 +26,12 @@ function databaseImages(_database) {
 
 			// Make sure the optional parameters are correct.
 			_limit = !isNaN(parseInt(_limit)) 
-				? parseInt(_limit)
-				: 30;
+				? (parseInt(_limit) <= 50 ? parseInt(_limit) : 50)
+				: 5;
 
 			_page = !isNaN(parseInt(_page)) 
 				? parseInt(_page)
-				: 0;
+				: 1;
 
 			// Initial search query, will implement $or someday I swear
 			var query = {};
@@ -103,10 +103,16 @@ function databaseImages(_database) {
 				}
 			}
 
-			db.collection(cName).find(query).skip(_page).limit(_limit).toArray(function(err, result) {
-				err 
-					? callback("error")
-					: callback(result);
+			db.collection(cName).find(query).skip((_page - 1) * 5 ).limit(_limit).toArray(function(err, result) {
+				if(!err) {
+					db.collection(cName).count(function(err, count) {
+						const pages = Math.ceil(count / 5); // Number of pages
+
+						callback(null, result, pages);
+					});
+				} else {
+					callback("error");
+				}
 			});
 		});
 	}
