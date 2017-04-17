@@ -56,7 +56,7 @@ function Images(_server, _webserver) {
 						res.render("gallery", options);
 					});				
 				} else {
-					res.redirect("/");
+					res.redirect("/images/");
 				}
 			}
 		});

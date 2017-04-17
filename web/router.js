@@ -6,7 +6,7 @@ const Config = require('../config.json')
 
 function Router(_server, _webserver) {
 	_webserver.get('/', function(req, res) {
-		_server.generateOptions("Index - " + Config["name"], req, function(options) {
+		_server.generateOptions(Config["name"], req, function(options) {
 			res.render('index', options);
 		});
 	});

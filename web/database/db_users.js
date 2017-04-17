@@ -17,6 +17,7 @@ function DatabaseUsers(_database) {
 					callback(result[0]["_id"]);
 				else 
 					callback("not found");
+				db.close();
 			});
 		});
 	}
@@ -29,6 +30,7 @@ function DatabaseUsers(_database) {
 					callback(true);
 				else
 					callback(false);
+				db.close();
 			});
 		});
 	}
@@ -103,6 +105,7 @@ function DatabaseUsers(_database) {
 														callback("error");
 													else
 														callback("success");
+													db.close();
 												});
 											});
 										});
@@ -143,6 +146,7 @@ function DatabaseUsers(_database) {
 								}
 							});
 						}
+						db.close();
 					})
 				});
 			}

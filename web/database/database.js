@@ -2,13 +2,13 @@
 	Take care of any database access
 */
 
-const MongoClient = require('mongodb').MongoClient, ObjectId = require('mongodb').ObjectId;
+const MongoClient = require('mongodb').MongoClient, Server = require('mongodb').Server,ObjectId = require('mongodb').ObjectId;
 const dbUsers = require('./db_users.js'), dbImages = require('./db_images.js');
 
 function Database(_parent) {
 
 	// The local url of the database
-	this.DatabaseUrl = "mongodb://localhost:27017/board"; // Will need to change this k
+	this.DatabaseUrl = "mongodb://localhost:27017/board";
 
 	// Used to connect to the db
 	this.connect = function(callback) {

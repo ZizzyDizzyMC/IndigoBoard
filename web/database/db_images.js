@@ -16,6 +16,7 @@ function databaseImages(_database) {
 					callback(result[0]);
 				else
 					callback("not found");
+				db.close();
 			});
 		});
 	}
@@ -110,9 +111,10 @@ function databaseImages(_database) {
 
 						callback(null, result, pages);
 					});
-				} else {
+				} else
 					callback("error");
-				}
+
+				db.close();
 			});
 		});
 	}
@@ -125,6 +127,7 @@ function databaseImages(_database) {
 					callback(result[0]);
 				else
 					callback("not found");
+				db.close();
 			});
 		});
 	}
@@ -177,6 +180,8 @@ function databaseImages(_database) {
 					callback("error", null);
 				else
 					callback(null, result.ops[0]._id);
+
+				db.close();
 			});
 		});
 	}
