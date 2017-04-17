@@ -105,7 +105,7 @@ function databaseImages(_database) {
 
 			db.collection(cName).find(query).skip((_page - 1) * 5 ).limit(_limit).toArray(function(err, result) {
 				if(!err) {
-					db.collection(cName).count(function(err, count) {
+					db.collection(cName).find(query).count(function(err, count) {
 						const pages = Math.ceil(count / 5); // Number of pages
 
 						callback(null, result, pages);

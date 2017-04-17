@@ -34,6 +34,8 @@ function Images(_server, _webserver) {
 		_server.indigo.database.imgs.imageSearch("", null, null, function(err, imgs, pages) {
 			_server.generateOptions("Gallery", req, function(options) {
 				options.images = imgs;
+				options.pages = pages;
+				options.cpage = 1;
 				res.render("gallery", options);
 			});
 		});
@@ -49,6 +51,7 @@ function Images(_server, _webserver) {
 						options.tags = req.query.tags;
 						options.images = imgs;
 						options.pages = pages;
+						options.cpage = req.query.page || 1;
 
 						res.render("gallery", options);
 					});				
@@ -63,18 +66,23 @@ function Images(_server, _webserver) {
 		if(isNaN(parseInt(req.params.index))) {
 			res.redirect("/images/");
 		} else {
-			_server.indigo.database.imgs.imageSearch("", null, req.params.index, function(err, imgs, pages) {
-				if(imgs.length > 0) {
-					_server.generateOptions("Gallery", req, function(options) {
-						options.images = imgs;
-						options.pages = pages;
+			if(req.params.index > 1) {
+				_server.indigo.database.imgs.imageSearch("", null, req.params.index, function(err, imgs, pages) {
+					if(imgs.length > 0) {
+						_server.generateOptions("Gallery", req, function(options) {
+							options.images = imgs;
+							options.pages = pages;
+							options.cpage = req.params.index || 1;
 
-						res.render("gallery", options);
-					});
-				} else {
-					res.redirect("/images/");
-				}
-			});
+							res.render("gallery", options);
+						});
+					} else {
+						res.redirect("/images/");
+					}
+				});
+			} else {
+				res.redirect("/images/");
+			}
 		}
 	});
 

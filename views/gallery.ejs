@@ -6,10 +6,25 @@
 		<%- include('imports/navbar'); %>
 
 		<main>
-			<% for(var img in images) { %>
-			<% 		img_id = images[img]._id %>
-				<%- include('imports/image_card'); %>
-			<% } %>
+			<div class="images-gallery">
+				<% for(var img in images) { %>
+					<%  img_id = images[img]._id %>
+					<%- include('imports/image_card'); %>
+				<% } %>
+			</div>
+
+			<% if(pages > 1) { %>
+				<div class="pages-container">
+					<% for(var i = 1; i < pages + 1; i++) { %>
+						<% if(typeof tags != "undefined") { %>
+							<a href="/images/search?tags=<%- tags %>&page=<%- i %>" class="page-link<%- i == cpage ? " selected" : ""%>">
+						<% } else { %>
+							<a href="/images/page/<%- i %>" class="page-link<%- i == cpage ? " selected" : ""%>">
+						<% }%>
+						<%- i %></a>
+					<% } %>
+				</div>
+			<% } %>
 		</main>
 	</body>
 </html>
