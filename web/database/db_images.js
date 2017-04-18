@@ -26,11 +26,11 @@ function databaseImages(_database) {
 			const searchTags = _search.length == 0 ? [] : _search.split(','); // Make sure the search isn't empty
 
 			// Make sure the optional parameters are correct.
-			_limit = !isNaN(parseInt(_limit)) 
+			_limit = !isNaN(parseInt(_limit))
 				? (parseInt(_limit) <= 50 ? parseInt(_limit) : 50)
 				: 50;
 
-			_page = !isNaN(parseInt(_page)) 
+			_page = !isNaN(parseInt(_page))
 				? parseInt(_page)
 				: 1;
 
@@ -41,7 +41,7 @@ function databaseImages(_database) {
 				query["$and"] = [];
 			}
 
-			// The temporary query 
+			// The temporary query
 			var superQuery = {};
 
 			// Indentifier for searches
@@ -85,7 +85,7 @@ function databaseImages(_database) {
 				}
 			}
 
-			// Sorting algorithm 
+			// Sorting algorithm
 			for(p in superQuery) {
 				function addToQuery(_what, _is, _item) {
 					query["$and"].push({
@@ -158,8 +158,8 @@ function databaseImages(_database) {
 						_rating = ["explcit", "e"];
 						break;
 
-					case "questionnable":
-						_rating = ["questionnable", "q"];
+					case "questionable":
+						_rating = ["questionable", "q"];
 						break;
 				}
 			}

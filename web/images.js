@@ -14,6 +14,11 @@ function Images(_server, _webserver) {
 				_server.generateOptions(Config["name"] + " - " + result["tags"], req, function(options) {
 					options.tags = result.tags;
 					options.source = "/imgs/" + result._id;
+					options.artists = result.artists;
+					options.uploader = result.uploader;
+					options.uploaded = result.uploadDate;
+					options.src = result.source;
+					options.rating = result.rating;
 					res.render("view", options);
 				});
 			}

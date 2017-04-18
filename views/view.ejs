@@ -6,14 +6,28 @@
 		<%- include('imports/navbar'); %>
 
 		<main>
-			<div class="image-container">
-				<img class="view-image" src='<%- source %>'>
-			</div>
+			<div class = "view-main">
+				<div class="tags-container">
+					<div class="tags">
+						<h3>Tags</h3>
+						<% tags.forEach(function(tag) { %>
+							<p class="tag-item"><a href='/images/search?tags=<%- tag %>'> <%- tag %> </a></p>
+							<%	}) %>
+						</div>
 
-			<div class="tags-container">
-			<% tags.forEach(function(tag) { %>
-				<p class="tag-item"><%- tag %></p> 
-			<%	}) %>
+						<div class="uploader-info">
+							<p><b>Uploader: </b><a href='/images/search?tags=uploader:<%- uploader %>'> <%- uploader %> </a></p>
+							<p><b>Uploaded: </b><%- uploaded %></p>
+							<p><b>Rating: </b><a href='/images/search?tags=rating:<%- rating[0] %>'> <%- rating[0] %> </a></p>
+							<p><b>Source: </b><a href='<%- src %>'> <%- src %> </a></p>
+							</div>
+					</div>
+
+
+				<div class="image-container">
+					<img class="view-image" src='<%- source %>'>
+				</div>
+
 			</div>
 		</main>
 	</body>
