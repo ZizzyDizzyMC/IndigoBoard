@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<%- include('imports/header'); %>
+
+	<body>
+		<%- include('imports/navbar'); %>
+
+		<main>
+			<% rules.rules.forEach(function(rule){ %>
+				<h1><%= rule.name %></h1>
+				<p><%- rule.description %></p>
+			<% }); %>
+		</main>
+	</body>
+</html>

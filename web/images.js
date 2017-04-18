@@ -54,7 +54,7 @@ function Images(_server, _webserver) {
 						options.cpage = req.query.page || 1;
 
 						res.render("gallery", options);
-					});				
+					});
 				} else {
 					res.redirect("/images/");
 				}
