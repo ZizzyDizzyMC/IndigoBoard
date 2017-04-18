@@ -238,3 +238,15 @@ main h1 {
 	width: 100%;
 	vertical-align: center;
 }
+
+.tags-container {
+	display: flex;
+}
+
+.tag-item {
+	color: black;
+	border-radius: 5px;
+	padding: 5px;
+	margin: 5px;
+	background-color: white;
+}

@@ -9,7 +9,12 @@
 			<div class="image-container">
 				<img class="view-image" src='<%- source %>'>
 			</div>
-			<p><%- tags %></p>
+
+			<div class="tags-container">
+			<% tags.forEach(function(tag) { %>
+				<p class="tag-item"><%- tag %></p> 
+			<%	}) %>
+			</div>
 		</main>
 	</body>
 </html>
