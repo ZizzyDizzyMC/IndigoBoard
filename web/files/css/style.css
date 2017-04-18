@@ -165,8 +165,9 @@ main h1 {
 
 .index-page {
 	position: absolute;
-	width: 500px;
-	transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 500px;
+    transform: translate(-50%, -50%);
 	top: 50%;
 	left: 50%;
 }
@@ -178,12 +179,12 @@ main h1 {
 }
 
 .index-page .links-area a {
-	font-size: 20px;
 	color: white;
 	margin: auto;
 	padding: 0 8px;
 	text-decoration: none;
 	border-bottom-style: solid;
+	border-bottom-width: 2px;
 	border-bottom-color: transparent;
 	transition: border 1s;
 }
@@ -220,7 +221,7 @@ main h1 {
 
 .index-title {
 	color: white;
-	font-size: 5em;
+	font-size: 450%;
 	top: 50%;
 	left: 50%;
 	position: absolute;
