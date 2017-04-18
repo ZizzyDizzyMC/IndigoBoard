@@ -56,14 +56,7 @@ function Images(_server, _webserver) {
 						res.render("gallery", options);
 					});
 				} else {
-					_server.generateOptions("Search Results - " + Config["name"], req, function(options) {
-						options.tags = req.query.tags;
-						options.images = [];
-						options.pages = pages;
-						options.cpage =  1;
-
-						res.render("gallery", options)
-					})
+					res.redirect("/images/");
 				}
 			}
 		});

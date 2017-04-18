@@ -7,11 +7,9 @@
 
 		<main>
 			<div class="images-gallery">
-				<% if(images.length > 0){ %>
-					<% for(var img in images) { %>
-						<%  img_id = images[img]._id %>
-						<%- include('imports/image_card'); %>
-					<% } %>
+				<% for(var img in images) { %>
+					<%  img_id = images[img]._id %>
+					<%- include('imports/image_card'); %>
 				<% } %>
 			</div>
 
