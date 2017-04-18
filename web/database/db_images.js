@@ -28,7 +28,7 @@ function databaseImages(_database) {
 			// Make sure the optional parameters are correct.
 			_limit = !isNaN(parseInt(_limit)) 
 				? (parseInt(_limit) <= 50 ? parseInt(_limit) : 50)
-				: 5;
+				: 50;
 
 			_page = !isNaN(parseInt(_page)) 
 				? parseInt(_page)
