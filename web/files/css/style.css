@@ -244,9 +244,8 @@ main h1 {
 }
 
 .tag-item {
-	color: black;
-	border-radius: 5px;
+	color: white;
 	padding: 5px;
 	margin: 5px;
-	background-color: white;
+	background-color: #3F51B5;
 }
