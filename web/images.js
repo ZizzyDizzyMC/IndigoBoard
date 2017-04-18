@@ -32,7 +32,7 @@ function Images(_server, _webserver) {
 
 	_webserver.get("/images/", function(req, res) {
 		_server.indigo.database.imgs.imageSearch("", null, null, function(err, imgs, pages) {
-			_server.generateOptions("Gallery", req, function(options) {
+			_server.generateOptions("Gallery - " + Config["name"], req, function(options) {
 				options.images = imgs;
 				options.pages = pages;
 				options.cpage = 1;
@@ -47,7 +47,7 @@ function Images(_server, _webserver) {
 				res.redirect("/images/");
 			} else {
 				if(imgs.length > 0) {
-					_server.generateOptions("Search results", req, function(options) {
+					_server.generateOptions("Search Results - " + Config["name"], req, function(options) {
 						options.tags = req.query.tags;
 						options.images = imgs;
 						options.pages = pages;
@@ -56,7 +56,14 @@ function Images(_server, _webserver) {
 						res.render("gallery", options);
 					});
 				} else {
-					res.redirect("/images/");
+					_server.generateOptions("Search Results - " + Config["name"], req, function(options) {
+						options.tags = req.query.tags;
+						options.images = [];
+						options.pages = pages;
+						options.cpage =  1;
+
+						res.render("gallery", options)
+					})
 				}
 			}
 		});
@@ -69,7 +76,7 @@ function Images(_server, _webserver) {
 			if(req.params.index > 1) {
 				_server.indigo.database.imgs.imageSearch("", null, req.params.index, function(err, imgs, pages) {
 					if(imgs.length > 0) {
-						_server.generateOptions("Gallery", req, function(options) {
+						_server.generateOptions("Gallery - " - Config["name"], req, function(options) {
 							options.images = imgs;
 							options.pages = pages;
 							options.cpage = req.params.index || 1;
@@ -88,7 +95,7 @@ function Images(_server, _webserver) {
 
 	_webserver.get("/upload", function(req, res) {
 		if(Config["allow-anonymous"] || _server.isUserLoggedIn(req)) {
-			_server.generateOptions("Upload", req, function(options) {
+			_server.generateOptions("Upload - " + Config["name"], req, function(options) {
 				res.render("upload", options);
 			});
 		} else {
