@@ -121,7 +121,6 @@ function databaseImages(_database) {
 
 	this.getImageAtIndex = function(_index, callback) {
 		_database.connect(function(db) {
-			console.log(_index);
 			db.collection(cName).find().skip(_index).limit(1).toArray(function(err, result) {
 				if(result.length > 0)
 					callback(result[0]);

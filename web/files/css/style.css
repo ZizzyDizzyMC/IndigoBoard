@@ -102,6 +102,37 @@ main {
 	margin: 50px 10px 10px 10px;
 }
 
+main h1 {
+	color: white;
+}
+
+.upload-area {
+	background-color: #3F51B5;
+	color: white;
+	min-width: 300px;
+	max-width: 500px;
+	margin-left: 20px;
+	padding: 5px;
+}
+
+.upload-form {
+
+}
+
+.upload-form label {
+	font-size: 20px;
+	line-height: 30px;
+}
+
+.upload-form input[type="text"] {
+	width: 100%;
+	color: black;
+}
+
+.upload-form input[type="submit"] {
+	float: right;
+}
+
 .image_card {
 	width: 300px;
 	padding: 5px;
@@ -195,4 +226,14 @@ main {
 	position: absolute;
 	transform: translate(-50%, -50%);
 	margin-top: -100px;
+}
+
+.image-container {
+	background-color: #3F51B5;
+	padding: 5px;
+}
+
+.view-image {
+	width: 100%;
+	vertical-align: center;
 }
