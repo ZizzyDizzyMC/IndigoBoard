@@ -1,10 +1,10 @@
 # Indigoboard
-A taggable "booru-style" imageboard written in Node.js, prioritizing security, speed, and having the client-side completely Javascript-free.
+A taggable "booru-style" imageboard written in Node.js, prioritizing security, speed, and can be used with any Javascript.
 
 Currently in development, and not ready for release.
 
 ## Planned Features
-* A completely Javascript-less client side
+* Client-side is Javascript-free compatible.
 * Post and tag images and videos
 * Derpibooru-style tagging system (comma-seperated tags with spaces)
 * A simple yet fully-featured JSON REST API allowing you to do everything you can on the website from other locations
