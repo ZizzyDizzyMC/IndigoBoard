@@ -6,28 +6,27 @@
 		<%- include('imports/navbar'); %>
 
 		<main>
-			<div class = "view-main">
+			<div class="view-main">
 				<div class="tags-container">
-					<div class="tags">
-						<h3>Tags</h3>
-						<% tags.forEach(function(tag) { %>
-							<p class="tag-item"><a href='/images/search?tags=<%- tag %>'> <%- tag %> </a></p>
-							<%	}) %>
-						</div>
+					<h3>Tags</h3>
 
-						<div class="uploader-info">
-							<p><b>Uploader: </b><a href='/images/search?tags=uploader:<%- uploader %>'> <%- uploader %> </a></p>
-							<p><b>Uploaded: </b><%- uploaded %></p>
-							<p><b>Rating: </b><a href='/images/search?tags=rating:<%- rating[0] %>'> <%- rating[0] %> </a></p>
-							<p><b>Source: </b><a href='<%- src %>'> <%- src %> </a></p>
-							</div>
+					<div class="tags">
+						<% tags.forEach(function(tag) { %>
+							<a class="tag-item" href='/images/search?tags=<%- tag %>'> <%- tag %> </a>
+						<%	}) %>
 					</div>
 
+					<div class="uploader-info">
+						<p><span>Uploader: </span><a href='/images/search?tags=uploader:<%- uploader %>'> <%- uploader %> </a></p>
+						<!--<p><span>Uploaded: </span><%- uploaded %></p>-->
+						<p><span>Rating: </span><a href='/images/search?tags=rating:<%- rating[0] %>'> <%- rating[0] %> </a></p>
+						<p><span>Source: </span><a href='<%- src %>'> <%- src %> </a></p>
+					</div>
+				</div>
 
 				<div class="image-container">
 					<img class="view-image" src='<%- source %>'>
 				</div>
-
 			</div>
 		</main>
 	</body>
