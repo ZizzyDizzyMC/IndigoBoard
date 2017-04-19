@@ -88,9 +88,52 @@ function apiRouter(_server, _webserver) {
 		res.send(JSON.stringify({ ping: "pong" }));
 	})
 
+
+// i just copied the post /upload/ code lmao
 	_webserver.post('/api/v1/upload', function(req, res) {
 		res.setHeader('Content-Type', 'application/json');
-		res.send(JSON.stringify({ ping: "pong" }));
+		_server.indigo.database.users.logUser(req.body.username, req.body.password, function(err, id, username){
+
+			if (err == "not found" || err == "incorrect") {
+				res.send(JSON.stringify({error: "Login information was incorrect."}))
+			} else if (err) {
+				res.send(JSON.stringify({error: "Something went wrong."}))
+			} else {
+
+				if(req.files.length == 0) // Is a file uploaded ?
+					res.send(JSON.stringify({error: "No files were uploaded."}))
+
+				if(req.body.tags == "") // Tags should never be empty
+					res.send(JSON.stringify({error: "No tags were sent."}))
+
+				for(file in req.files) {
+
+					req.files[file].mv('./' + Config["folder"] + '/tmp/' + req.files[file].name, function(err) {
+						if(err)
+							console.error("something went wrong oops lol");
+
+						fs.readFile('./' + Config["folder"] + '/tmp/' + req.files[file].name, function(err, data) {
+							const hash = crypto.createHash("md5").update(data, 'utf-8').digest('hex');
+							const subhash = hash.substring(0,2);
+							const uploader = _server.loggedUser(req) == null ? "Anonymous" : _server.loggedUser(req);
+							const finalPath = subhash + "/" + hash + path.extname(req.files[file].name);
+
+							if(!fs.existsSync("./" + Config["folder"] + "/" + subhash))
+								fs.mkdirSync("./" + Config["folder"] + "/" + subhash); // Create the subfolder
+							fs.renameSync("./" + Config["folder"] + "/tmp/" + req.files[file].name, "./imgs/" + finalPath); // Add the file to the correct folder
+
+							_server.indigo.database.imgs.addImage(hash, finalPath, req.body.tags, uploader, req.body.artists, req.body.source, req.body.rating, function(err, data) {
+								if(err == null) {
+									res.send(JSON.stringify({success: "The image was uploaded successfully."}))
+								} else {
+									res.send(JSON.stringify({error: "Something went wrong."}))
+								}
+							});
+						});
+					});
+				}
+			}
+		});
 	})
 }
 
