@@ -11,12 +11,12 @@
 					<h3>Tags</h3>
 
 					<div class="tags">
-						<% tags.forEach(function(tag) { %>
-							<a class="tag-item" href='/images/search?tags=<%- tag %>'><i class="fa fa-tag" aria-hidden="true"></i> <%- tag %> </a>
-						<%	}) %>
-
 						<% artists.forEach(function(artist) { %>
 							<a class="tag-item" href='/images/search?tags=artist:<%- artist %>'><i class="fa fa-paint-brush" aria-hidden="true"></i> <%- artist %> </a>
+						<%	}) %>
+
+						<% tags.forEach(function(tag) { %>
+							<a class="tag-item" href='/images/search?tags=<%- tag %>'><i class="fa fa-tag" aria-hidden="true"></i> <%- tag %> </a>
 						<%	}) %>
 					</div>
 

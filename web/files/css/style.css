@@ -231,11 +231,13 @@ main h1 {
 
 .view-main {
 	display: inline-flex;
+	flex-direction: column-reverse;
 	width: 100%;
 }
 
 .image-container {
-	margin-left: 10px;
+	margin-left: 0px;
+	margin-bottom: 5px;
 }
 
 .image-container img {
@@ -243,7 +245,7 @@ main h1 {
 }
 
 .tags-container {
-	width: 500px;
+	width: 100%;
 	display: inline-flex;
 	flex-direction: column;
 	background-color: #3F51B5;
@@ -254,17 +256,43 @@ main h1 {
 	margin: 5px;
 }
 
+@media only screen and (min-width: 600px) {
+	.view-main {
+		flex-direction: row;
+	} 
+
+	.image-container {
+		margin-left: 10px;
+		margin-bottom: 0px;
+	}
+
+	.tags-container {
+		width: 500px;
+	}
+
+	.tags {
+		overflow: auto;
+		max-height: 300px;
+	}
+}
+
+/*
+	Think of adding a custom scrollbar for the div, it looks kinda meh rn
+*/
+
 .tags {
 	flex-grow: 1;
 	display: inline-flex;
 	flex-direction: column;
+	margin: 5px 10px 0px 10px;
 }
 
 .tag-item {
-	margin: 10px 10px 0px 10px;
+	padding: 5px 0;
 	color: white;
 	transition: background-color .2s;
 	text-decoration: none;
+	font-size: 18px;
 }
 
 .tag-item:hover {
