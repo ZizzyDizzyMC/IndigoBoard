@@ -169,7 +169,7 @@ function databaseImages(_database) {
 				hash: _hash,
 				path: _path,
 				tags: tagsArray,
-				artists: _artists || ["unknown"],
+				artists: artistsArray || ["unknown"],
 				source: _source || "unknown",
 				rating: _rating || ["safe", "s"],
 				uploader: [_uploader],
