@@ -140,6 +140,7 @@ main h1 {
 }
 
 .image_card img {
+	display: block;
 	max-width: 100%;
 }
 
@@ -242,6 +243,7 @@ main h1 {
 
 .image-container img {
 	width: 100%;
+	display: block;
 }
 
 .tags-container {
@@ -267,18 +269,9 @@ main h1 {
 	}
 
 	.tags-container {
-		width: 500px;
-	}
-
-	.tags {
-		overflow: auto;
-		max-height: 300px;
+		width: 200px;
 	}
 }
-
-/*
-	Think of adding a custom scrollbar for the div, it looks kinda meh rn
-*/
 
 .tags {
 	flex-grow: 1;
@@ -288,11 +281,14 @@ main h1 {
 }
 
 .tag-item {
-	padding: 5px 0;
 	color: white;
 	transition: background-color .2s;
 	text-decoration: none;
 	font-size: 18px;
+}
+
+.tag-item i {
+	margin: 5px;
 }
 
 .tag-item:hover {
@@ -316,6 +312,7 @@ main h1 {
 .uploader-info p {
 	color: white;
 	width: 100%;
+	margin: 5px 0 0 0;
 }
 
 .uploader-info a:hover {

@@ -136,8 +136,8 @@ function databaseImages(_database) {
 			const creationDate = new Date(); // When the upload happened
 
 			// Turn the tags and artist parameter into arrays.
-			var tagsArray = _tags.split(','),
-				artistsArray = _artists.split(',');
+			var tagsArray = _tags.split(',');
+			var artistsArray = (_artists.length == 0 ? ["unknown"] : _artists.split(",")); 
 
 			for(var tag in tagsArray) {
 				tagsArray[tag] = tagsArray[tag].trim();
@@ -169,7 +169,7 @@ function databaseImages(_database) {
 				hash: _hash,
 				path: _path,
 				tags: tagsArray,
-				artists: artistsArray || ["unknown"],
+				artists: artistsArray,
 				source: _source || "unknown",
 				rating: _rating || ["safe", "s"],
 				uploader: [_uploader],
