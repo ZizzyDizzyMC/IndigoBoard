@@ -23,7 +23,12 @@ function databaseImages(_database) {
 
 	this.imageSearch = function(_search, _limit, _page, callback) {
 		_database.connect(function(db) {
-			const searchTags = _search.length == 0 ? [] : _search.split(','); // Make sure the search isn't empty
+			searchTags = _search.length == 0 ? [] : _search.split(','); // Make sure the search isn't empty
+			if (searchTags != []){
+				for(var tag in searchTags){
+					searchTags[tag] = searchTags[tag].toLowerCase();
+				}
+			}
 
 			// Make sure the optional parameters are correct.
 			_limit = !isNaN(parseInt(_limit))
@@ -137,7 +142,11 @@ function databaseImages(_database) {
 
 			// Turn the tags and artist parameter into arrays.
 			var tagsArray = _tags.split(',');
-			var artistsArray = (_artists.length == 0 ? ["unknown"] : _artists.split(",")); 
+			for(var tag in tagsArray){
+				tagsArray[tag] = tagsArray[tag].toLowerCase();
+			}
+
+			var artistsArray = (_artists.length == 0 ? ["unknown"] : _artists.split(","));
 
 			for(var tag in tagsArray) {
 				tagsArray[tag] = tagsArray[tag].trim();

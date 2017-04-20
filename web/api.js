@@ -106,6 +106,9 @@ function apiRouter(_server, _webserver) {
 				if(req.body.tags == "") // Tags should never be empty
 					res.send(JSON.stringify({error: "No tags were sent."}))
 
+				if (!(req.body.rating in ["safe", "s", "questionable", "q", "explicit", "e"]))
+					res.send(JSON.stringify({error: "The rating specified does not exist."}))
+
 				for(file in req.files) {
 
 					req.files[file].mv('./' + Config["folder"] + '/tmp/' + req.files[file].name, function(err) {
