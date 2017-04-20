@@ -59,7 +59,7 @@ function Server(_parent) {
 			name: Config.name,
 			title: _title,
 			anonup: Config["allow-anonymous"],
-			searchTags: _req.query.tags || ""
+			searchTags: _req.query.s || ""
 		};
 
 		if(_req.signedCookies.userID || _req.session.userID) {

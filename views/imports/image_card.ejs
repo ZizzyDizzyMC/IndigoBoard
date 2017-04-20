@@ -1,5 +1,5 @@
 <div class="image_card">
-	<a href="/images/view/<%- img_id %>">
+	<a href="/images/view/<%- img_id + (searchTags.length > 0 ? "?s=" + searchTags : "")%>">
 		<img src="/imgs/<%- img_id %>">
 	</a>
 </div>

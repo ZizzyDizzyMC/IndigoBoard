@@ -28,7 +28,7 @@ function databaseImages(_database) {
 			// Make sure the optional parameters are correct.
 			_limit = !isNaN(parseInt(_limit))
 				? (parseInt(_limit) <= 50 ? parseInt(_limit) : 50)
-				: 50;
+				: 30;
 
 			_page = !isNaN(parseInt(_page))
 				? parseInt(_page)
@@ -104,10 +104,10 @@ function databaseImages(_database) {
 				}
 			}
 
-			db.collection(cName).find(query).skip((_page - 1) * 5 ).limit(_limit).toArray(function(err, result) {
+			db.collection(cName).find(query).skip((_page - 1) * 30 ).limit(_limit).toArray(function(err, result) {
 				if(!err) {
 					db.collection(cName).find(query).count(function(err, count) {
-						const pages = Math.ceil(count / 5); // Number of pages
+						const pages = Math.ceil(count / 30); // Number of pages
 
 						callback(null, result, pages);
 					});

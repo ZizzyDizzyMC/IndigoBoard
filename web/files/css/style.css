@@ -133,15 +133,48 @@ main h1 {
 	float: right;
 }
 
+.images-gallery {
+	display: grid;
+	grid-template-columns: 20% 20% 20% 20% 20%;
+}
+
+@media only screen and (max-width: 1000px) { 
+	.images-gallery {
+		grid-template-columns: 25% 25% 25% 25%;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.images-gallery {
+		grid-template-columns: 33% 33% 33%;
+	}
+}
+
+@media only screen and (max-width: 650px) {
+	.images-gallery {
+		grid-template-columns: 50% 50%;
+	}
+}
+
 .image_card {
-	width: 300px;
-	padding: 5px;
+	height: 200px;
+	margin: 5px;
 	background-color: #303F9F;
+	padding: 5px;
+}
+
+.image_card a {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
 }
 
 .image_card img {
 	display: block;
-	max-width: 100%;
+   	max-width: 100%;
 }
 
 .pages-container {
@@ -269,7 +302,7 @@ main h1 {
 	}
 
 	.tags-container {
-		width: 200px;
+		width: 25%;
 	}
 }
 
@@ -285,10 +318,7 @@ main h1 {
 	transition: background-color .2s;
 	text-decoration: none;
 	font-size: 18px;
-}
-
-.tag-item i {
-	margin: 5px;
+	padding: 5px;
 }
 
 .tag-item:hover {

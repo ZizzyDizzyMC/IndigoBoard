@@ -12,18 +12,18 @@
 
 					<div class="tags">
 						<% artists.forEach(function(artist) { %>
-							<a class="tag-item" href='/images/search?tags=artist:<%- artist %>'><i class="fa fa-paint-brush" aria-hidden="true"></i> <%- artist %> </a>
+							<a class="tag-item" href='/images/search?s=artist:<%- artist %>'>artist:<%- artist %> </a>
 						<%	}) %>
 
 						<% tags.forEach(function(tag) { %>
-							<a class="tag-item" href='/images/search?tags=<%- tag %>'><i class="fa fa-tag" aria-hidden="true"></i> <%- tag %> </a>
+							<a class="tag-item" href='/images/search?s=<%- tag %>'><%- tag %> </a>
 						<%	}) %>					
 					</div>
 
 					<div class="uploader-info">
-						<p><span>Uploader: </span><a href='/images/search?tags=uploader:<%- uploader %>'> <%- uploader %> </a></p>
+						<p><span>Uploader: </span><a href='/images/search?s=uploader:<%- uploader %>'> <%- uploader %> </a></p>
 						<p><span>Uploaded: </span><%- uploaded %></p>
-						<p><span>Rating: </span><a href='/images/search?tags=rating:<%- rating[0] %>'> <%- rating[0] %> </a></p>
+						<p><span>Rating: </span><a href='/images/search?s=rating:<%- rating[0] %>'> <%- rating[0] %> </a></p>
 						<p><span>Source: </span><a href='<%- src %>'> <%- src %> </a></p>
 					</div>
 				</div>

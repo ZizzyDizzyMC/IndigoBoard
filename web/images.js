@@ -19,6 +19,7 @@ function Images(_server, _webserver) {
 					options.uploaded = result.uploadDate;
 					options.src = result.source;
 					options.rating = result.rating;
+
 					res.render("view", options);
 				});
 			}
@@ -47,13 +48,13 @@ function Images(_server, _webserver) {
 	});
 
 	_webserver.get("/images/search", function(req, res) {
-		_server.indigo.database.imgs.imageSearch(req.query.tags, null, req.query.page || null, function(err, imgs, pages) {
-			if(req.query.tags.length == 0) {
+		_server.indigo.database.imgs.imageSearch(req.query.s, null, req.query.page || null, function(err, imgs, pages) {
+			if(req.query.s.length == 0) {
 				res.redirect("/images/");
 			} else {
 				if(imgs.length > 0) {
 					_server.generateOptions("Search Results - " + Config["name"], req, function(options) {
-						options.tags = req.query.tags;
+						options.tags = req.query.s;
 						options.images = imgs;
 						options.pages = pages;
 						options.cpage = req.query.page || 1;
