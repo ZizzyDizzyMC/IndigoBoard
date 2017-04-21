@@ -18,22 +18,19 @@ function Router(_server, _webserver) {
 	});
 
 	_webserver.get('/about/', function(req, res) {
-		_server.generateOptions(Config["name"] + " - About Us", req, function(options){
-			options.content = About;
+		_server.generateOptions("About - " + Config["name"], req, function(options){
 			res.render('about', options);
 		});
 	});
 
 	_webserver.get('/contact/', function(req, res) {
-		_server.generateOptions(Config["name"] + " - About Us", req, function(options){
-			options.content = Contact;
+		_server.generateOptions("Contact - " + Config["name"], req, function(options){
 			res.render('about', options);
 		});
 	});
 
 	_webserver.get('/rules/', function(req, res){
 		_server.generateOptions("Rules - " + Config["name"], req, function(options){
-			options.rules = Rules
 			res.render('rules', options)
 		});
 	});

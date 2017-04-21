@@ -6,10 +6,7 @@
 		<%- include('imports/navbar'); %>
 
 		<main>
-			<% rules.rules.forEach(function(rule){ %>
-				<h1><%= rule.name %></h1>
-				<p><%- rule.description %></p>
-			<% }); %>
+			<%- include('custom/rules'); %>
 		</main>
 	</body>
 </html>
