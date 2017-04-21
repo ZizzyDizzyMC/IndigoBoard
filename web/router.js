@@ -2,7 +2,7 @@
 	Take care of routing everything else
  */
 
-const Config = require('../config.json'), Rules = require('../rules.json'), About = require('../about.json'), Contact = require('../contact.json')
+const Config = require('../config.json')
 
 function Router(_server, _webserver) {
 	_webserver.get('/', function(req, res) {
