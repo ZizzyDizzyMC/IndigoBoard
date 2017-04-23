@@ -23,7 +23,8 @@ function Users(_server, _webserver) {
 							options["creationDate"] = infos.created;
 							options["profilename"] = infos.username;
 							options["creationEmail"] = infos.email;
-
+							options["userClass"] = infos.userClass
+							
 							res.render("user", options);
 						});
 					});
@@ -152,7 +153,7 @@ function Users(_server, _webserver) {
 					}
 				});
 			}
-			
+
 			if (req.signedCookies.username) {
 				try {
 					res.clearCookie("userID");

@@ -1,0 +1,13 @@
+{
+	"administrator" : {
+		"create-images" : true,
+		"edit-images" : true,
+		"delete-images" : true
+	},
+
+	"user" : {
+		"create-images" : true,
+		"edit-images" : false,
+		"delete-images" : false
+	}
+}

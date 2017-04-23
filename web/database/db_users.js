@@ -9,13 +9,13 @@ function DatabaseUsers(_database) {
 	const cName = "users"; // Name of the collection
 	const self = this; // Setting a pointer variable to the 'this' object
 
-	// Check if user exists / Get user's id 
+	// Check if user exists / Get user's id
 	this.getUserId = function(_string, callback) {
 		_database.connect(function(db) {
 			db.collection(cName).find({$or:[ {email:_string},{username:_string} ]}).toArray(function(err, result) {
-				if(result.length > 0) 
+				if(result.length > 0)
 					callback(result[0]["_id"]);
-				else 
+				else
 					callback("not found");
 				db.close();
 			});
@@ -38,7 +38,7 @@ function DatabaseUsers(_database) {
 	// Check if an username is already used
 	this.isUsernameAvaible = function(_username, callback) {
 		this.getUserId(_username, function(result) {
-			if(result == "not found") 
+			if(result == "not found")
 				callback(true);
 			else
 				callback(false);
@@ -48,7 +48,7 @@ function DatabaseUsers(_database) {
 	// same as above but for emails
 	this.isEmailAvaible = function(_email, callback) {
 		this.getUserId(_email, function(result) {
-			if(result == "not found") 
+			if(result == "not found")
 				callback(true);
 			else
 				callback(false);
@@ -94,19 +94,25 @@ function DatabaseUsers(_database) {
 										self.hashPassword(_password, function(hash) {
 											_database.connect(function(db) {
 												const creationDate = new Date();
+												var userClass = null;
 
-												db.collection(cName).insert({
-													username: _username,
-													password: hash,
-													email: _email,
-													created: creationDate
-												}, function(err, result) {
-													if(err)
-														callback("error");
-													else
-														callback("success");
-													db.close();
-												});
+												db.collection(cName).count(function(err, result){
+													result == 0 ? userClass = "administrator" : userClass = "user";
+
+													db.collection(cName).insert({
+														username: _username,
+														password: hash,
+														email: _email,
+														created: creationDate,
+														userClass: userClass
+													}, function(err, result) {
+														if(err)
+															callback("error");
+															else
+															callback("success");
+															db.close();
+														});
+													});
 											});
 										});
 									} else {
